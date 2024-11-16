@@ -3,22 +3,36 @@
 
 import numpy as np
 
-#Algorithme pour les permutations entre 2 points
+def individual_data(nb_pts):
+    data = [[0., 0., 0.]]
+    for i in range(nb_pts):
+        print("-" * 30)
+        print(f"Entrez les valeurs (x, y et z) du point {i + 1}")
+        x = float(input("X -> "))
+        y = float(input("Y -> "))
+        z = float(input("Z -> "))
+        data.append([x, y, z])
+    return data
+
+def multi_data(nb_pts):
+    data = [[0., 0., 0.]]
+    for i in range(nb_pts):
+        print("-" * 30)
+        x, y, z = input(f"Entrez les valeurs (x, y, z) du point {i + 1}").split(sep=", ")
+        data.append([x, y, z])
+    return data
+
+def np_data(file):
+    return np.genfromtxt(file, delimiter=",", skip_header=1)
 
 def distance(data, un, deux):
-    temp = [(data[deux][0]-data[un][0]), (data[deux][1]-data[un][1]), (data[deux][2]-data[un][2])]
-    return ((temp[1] ** 2) + (temp[1] ** 2) + (temp[1] ** 2)) ** (1/2)
+    x1, y1, z1 = data[un][0], data[un][1], data[un][2]
+    x2, y2, z2 = data[deux][0], data[deux][1], data[deux][2]
+    temp = [(x2 - x1), (y2 - y1), (z2 - z1)]
+    return ((temp[0] ** 2) + (temp[1] ** 2) + (temp[2] ** 2)) ** (1/2)
 
 if __name__ == "__main__":
-    coords = [[0, 0, 0]]
-    while True:
-        coords_temp_x = (float(input('Entrez votre valeur en x : ')))
-        coords_temp_y = (float(input('Entrez votre valeur en y : ')))
-        coords_temp_z = (float(input('Entrez votre valeur en z : ')))
-        done = input('Écrivez « terminez » quand vous avez tous vos points : ')
-        print('-' * 35)
-        coords.append([coords_temp_x, coords_temp_y, coords_temp_z])
-        if done.lower() == 'terminez':
-            break
-    #data = np.genfromtxt("data.csv", delimiter=",", skip_header=1)
+    nombre = int(input("Combien de points voulez-vous calculer (en plus du point 0) : "))
+    coords = np.array(individual_data(nombre))
+    print(coords)
     print(distance(coords, 1, 2))
