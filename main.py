@@ -58,3 +58,4 @@ if __name__ == "__main__":
     print(coords)
     print(distance(coords, 1, 2))
     print(sommes_distances(permutations(nombre), coords))
+print('daven')
