@@ -52,6 +52,8 @@ def sommes_distances(permutation, data):
         dist_temp = 0.
     return dist
 
+
+
 if __name__ == "__main__":
     nombre = int(input("Combien de points voulez-vous calculer (en plus du point 0) : "))
     coords = np.array(individual_data(nombre))
