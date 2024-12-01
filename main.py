@@ -2,10 +2,12 @@
 # Objectif - Créer un algorithme qui est capable de déterminer le chemin le plus court entre 5 points.
 
 import itertools
-
 import numpy as np
+import tkinter as tk
+from tkinter import *
 
 
+#------------------Récupération de données---------------------------
 def individual_data(nb_pts):
     data = [[0., 0., 0.]]
     for i in range(nb_pts):
@@ -28,33 +30,59 @@ def multi_data(nb_pts):
 def np_data(file):
     return np.genfromtxt(file, delimiter=",", skip_header=1)
 
+#---------------------------Calcul de distances----------------------------------
 def distance(data, un, deux):
     x1, y1, z1 = data[un][0], data[un][1], data[un][2]
     x2, y2, z2 = data[deux][0], data[deux][1], data[deux][2]
     temp = [(x2 - x1), (y2 - y1), (z2 - z1)]
     return ((temp[0] ** 2) + (temp[1] ** 2) + (temp[2] ** 2)) ** (1/2)
 
+def addition_en_boucle(liste, nb):
+    pass
 
-def permutations(nb_pts):
+#------------------------Calcul décentré-------------------------------------
+def permutations_sans_centre(nb_pts):
+    nombre_points = [_ for _ in range(0, nb_pts + 1)]
+    return list(itertools.permutations(nombre_points, nb_pts + 1))
+    #TODO - Montrer un meilleur algo
+
+#------------------------Calculs centré----------------------------------
+def permutations_centre(nb_pts):
     nombre_points = [_ for _ in range(1, nb_pts + 1)]
     return list(itertools.permutations(nombre_points, nb_pts))
-    # TODO - Modifier pour un code propriétaire
 
-
-def sommes_distances(permutation, data):
-    dist = []
+def sommes_distances_centre(permutation, data):
+    dist_somme = []
     dist_temp = 0.
     for i in range(len(permutation)):
         for j in range(len(permutation[i])):
-            dist_temp += distance(data, permutation[i][j], permutation[i][j + 1])
-            # TODO - Trouver une meilleure solution pour ordonner les distances temporaires
-        dist.append(dist_temp)
+            if j == 0:
+                dist_temp += distance(data, 0, permutation[i][j])
+                continue
+            dist_temp += distance(data, permutation[i][j-1], permutation[i][j])
+        dist_somme.append(dist_temp)
         dist_temp = 0.
-    return dist
+    return dist_somme
 
+#---------------------------Analyse et affichage--------------------------------------------------
+def min_order(valeurs, permutations):
+    min = None
+    ordre_list = []
+    for arg in valeurs:
+        if min is None or arg <= min:
+            min = arg
+    for a in range(len(valeurs)):
+        if min == valeurs[a]:
+            ordre_list.append(valeurs[a])
+
+
+#--------------------------Programme principal (centré)-------------------------------------------
 if __name__ == "__main__":
-    nombre = int(input("Combien de points voulez-vous calculer (en plus du point 0) : "))
-    coords = np.array(individual_data(nombre))
+    nombre_points = int(input("Combien de points voulez-vous calculer (en plus du point 0) : "))
+    coords = np.array(individual_data(nombre_points))
+    perm = permutations_centre(nombre_points)
+    dist_total = np.array(sommes_distances_centre(permutations_centre(nombre_points), coords))
+
     print(coords)
-    print(distance(coords, 1, 2))
-    print(sommes_distances(permutations(nombre), coords))
+    print(permutations_centre(nombre_points))
+    print(np.array(sommes_distances_centre(permutations_centre(nombre_points), coords)))
