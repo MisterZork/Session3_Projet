@@ -10,13 +10,18 @@ import tkinter as tk
 #------------------Récupération de données---------------------------
 def individual_data(nb_pts):
     data = [[0., 0., 0.]]
-    for i in range(nb_pts): #Boucle pour
-        print("-" * 50)
-        print(f"Entrez les valeurs (x, y et z) du point {i + 1}")
-        x = float(input("X -> ").replace(",", "."))
-        y = float(input("Y -> ").replace(",", "."))
-        z = float(input("Z -> ").replace(",", "."))
-        data.append([x, y, z])
+    for i in range(nb_pts):
+        while True:
+            try:
+                print("-" * 50)
+                print(f"Entrez les valeurs (x, y et z) du point {i + 1}")
+                x = float(input("X -> ").replace(",", "."))
+                y = float(input("Y -> ").replace(",", "."))
+                z = float(input("Z -> ").replace(",", "."))
+                data.append([x, y, z])
+                break
+            except ValueError:
+                print("Valeur incorrecte, veuillez réessayer.")
     return data
 
 #---------------------------Calcul de distances et permutations----------------------------------
@@ -58,7 +63,13 @@ def min_order(total_distances):
 
 #--------------------------Programme principal-------------------------------------------
 if __name__ == "__main__":
-    nombre_points = int(input("Combien de points voulez-vous calculer (en plus du point 0) : "))
+    nombre_points = None
+    while nombre_points is None or nombre_points <= 0:
+        try:
+            nombre_points = int(input("Combien de points voulez-vous calculer (en plus du point 0) : "))
+            break
+        except ValueError:
+            print("Erreur - Veuillez utiliser un nombre entier positif pour représenter le nombre de points\n" + "-" * 50)
     coords = np.array(individual_data(nombre_points))
     perm = permutations_centre(nombre_points)
     dist_total = np.array(sommes_distances_centre(permutations_centre(nombre_points), coords))
