@@ -3,7 +3,6 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.pyplot import autoscale
 
 matplotlib.use("TkAgg")
 plt.style.use('_mpl-gallery')
@@ -14,7 +13,9 @@ coordinates = [[0., 0., 0.],
                 [2., 0., 1.],
                 [1., 1., 0.]]
 
-perm = [(1, 2, 3, 4), (1, 2, 4, 3), (1, 3, 2, 4), (1, 3, 4, 2), (1, 4, 2, 3), (1, 4, 3, 2), (2, 1, 3, 4), (2, 1, 4, 3), (2, 3, 1, 4), (2, 3, 4, 1), (2, 4, 1, 3), (2, 4, 3, 1), (3, 1, 2, 4), (3, 1, 4, 2), (3, 2, 1, 4), (3, 2, 4, 1), (3, 4, 1, 2), (3, 4, 2, 1), (4, 1, 2, 3), (4, 1, 3, 2), (4, 2, 1, 3), (4, 2, 3, 1), (4, 3, 1, 2), (4, 3, 2, 1)]
+perm = [(1, 2, 3, 4), (1, 2, 4, 3), (1, 3, 2, 4), (1, 3, 4, 2), (1, 4, 2, 3), (1, 4, 3, 2), (2, 1, 3, 4), (2, 1, 4, 3),
+        (2, 3, 1, 4), (2, 3, 4, 1), (2, 4, 1, 3), (2, 4, 3, 1), (3, 1, 2, 4), (3, 1, 4, 2), (3, 2, 1, 4), (3, 2, 4, 1),
+        (3, 4, 1, 2), (3, 4, 2, 1), (4, 1, 2, 3), (4, 1, 3, 2), (4, 2, 1, 3), (4, 2, 3, 1), (4, 3, 1, 2), (4, 3, 2, 1)]
 
 def afficher_animation(screen, coordinates, perm_data):
     fig = plt.Figure()
@@ -39,7 +40,10 @@ def afficher_animation(screen, coordinates, perm_data):
     canvas = FigureCanvasTkAgg(fig, master=screen)
 
     ani = animation.FuncAnimation(fig, update, frames=len(perm_data), interval=1000, repeat=True, blit=False)
-    canvas.get_tk_widget().pack(fill="both", expand=True)
+    #canvas.get_tk_widget().pack(fill="both", expand=True)
+    canvas.get_tk_widget().grid(row=0, column=0, sticky="NSWE")
+    screen.grid_columnconfigure(0, weight=1)
+    screen.grid_rowconfigure(0, weight=1)
     screen.ani = ani
 
 if __name__ == "__main__":
