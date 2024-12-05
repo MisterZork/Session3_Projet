@@ -7,6 +7,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 matplotlib.use("TkAgg")
 plt.style.use('_mpl-gallery')
 
+#Mise en place de valeurs test (voir le départ de ce code pour comprendre [ligne 55])
 test_coords = [[0., 0., 0.],
                [1., 1., 1.],
                [2., 2., 2.],
@@ -41,7 +42,6 @@ def afficher_animation(screen, coords, perm_data):
         ax.set_ylabel('Y', fontsize=12, color='green')
         ax.set_zlabel('Z', fontsize=12, color='blue')
         ax.set_title('Animation 3D avec Rotation', fontsize=15, color='purple')
-        ax.set(xticklabels=[], yticklabels=[], zticklabels=[])
 
     #Affichage dans le GUI Tkinter
     canvas = FigureCanvasTkAgg(fig, master=screen)

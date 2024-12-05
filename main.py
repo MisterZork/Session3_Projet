@@ -3,16 +3,15 @@
 
 #Importations des librairies nécessaires (voir requirements.txt pour trouver les modules à télécharger)
 import itertools
-import numpy as np
 from screen import afficher_animation
 import tkinter as tk
 
 #------------------Récupération de données---------------------------
 def individual_data(nb_pts):
     """Cette fonction récupère les cordonnées des points que l'on cherche"""
-    data = [[0., 0., 0.]]
+    data = [[0., 0., 0.]] #Mise en place du point 0, 0, 0
     for i in range(nb_pts):
-        while True: #Tentative de récupérer les bonnes valeurs, sauf si c'est un mauvais charactère
+        while True: #Tentative de récupérer les bonnes valeurs, sauf si c'est une valeur invalide
             try:
                 print("-" * 50)
                 print(f"Entrez les valeurs (x, y et z) du point {i + 1}")
@@ -21,7 +20,7 @@ def individual_data(nb_pts):
                 z = float(input("Z -> ").replace(",", "."))
                 data.append([x, y, z])
                 break
-            except ValueError: #Si c'est un mauvais charactère, la boucle recommence au point qu'il était rendu
+            except ValueError: #Si c'est une mauvaise valeur, la boucle recommence au point qu'il était rendu
                 print("Valeur incorrecte, veuillez réessayer.")
     return data
 
@@ -68,6 +67,7 @@ def min_order(total_distances):
 
 #--------------------------Programme principal-------------------------------------------
 if __name__ == "__main__":
+    #Attribution des variables à l'aide des fonctions ci-dessus
     nombre_points = None
     while nombre_points is None or nombre_points <= 0:
         try:
@@ -76,14 +76,14 @@ if __name__ == "__main__":
         except ValueError:
             print("Erreur - Veuillez utiliser un nombre entier positif pour représenter le nombre de points")
             print("-" * 50)
-    coords = np.array(individual_data(nombre_points))
+    coords = individual_data(nombre_points)
     perm = permutations_centre(nombre_points)
-    dist_total = np.array(sommes_distances_centre(permutations_centre(nombre_points), coords))
+    dist_total = sommes_distances_centre(permutations_centre(nombre_points), coords)
     minimum, id_perm = min_order(dist_total)
 
     #Affichage des résultats demandés
     print("-" * 50)
-    print(f"La distance la plus courte est : {round(minimum, 3)} unités")
+    print(f"La distance la plus courte est : {minimum} unités")
     print("Voici le(s) chemin(s) qui correspond(ent) à cela :")
     for elem in id_perm:
         print(f"P0 -> {" -> ".join([f"P{p}" for p in perm[elem]])}")
