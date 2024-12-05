@@ -1,2 +1,13 @@
-# Session3_Projet
-This is the 3rd session project made by 4 students, completing questions given by our teacher.
+# PPC-Session3
+## Description
+
+This project is focused on finding the shortest path possible in a given graph. It uses various algorithms to determine the most efficient route between nodes.
+
+## Requirements
+
+To install the required dependencies, run:
+```
+pip install -r requirements.txt
+```
+
+## How to run
