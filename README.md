@@ -1,7 +1,7 @@
-# PPC-Session3
+# ShortPath
 ## Description
 
-This project is focused on finding the shortest path possible in a given graph. It uses various algorithms to determine the most efficient route between nodes.
+This project is focused on finding the shortest path possible in a given graph, following every node once.
 
 ## Requirements
 
@@ -9,5 +9,3 @@ To install the required dependencies, run:
 ```
 pip install -r requirements.txt
 ```
-
-## How to run
